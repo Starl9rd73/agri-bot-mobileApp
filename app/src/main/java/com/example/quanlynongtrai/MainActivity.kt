@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     
     // History UI
     private lateinit var tvHistory: TextView
+    private lateinit var tvClearHistory: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         etDuration = findViewById(R.id.etDuration)
         btnSaveAuto = findViewById(R.id.btnSaveAuto)
         tvHistory = findViewById(R.id.tvHistory)
+        tvClearHistory = findViewById(R.id.tvClearHistory)
 
         switchPump.setOnCheckedChangeListener { _, isChecked ->
             val action = if (isChecked) "turn_on" else "turn_off"
@@ -84,6 +86,12 @@ class MainActivity : AppCompatActivity() {
 
         btnSaveAuto.setOnClickListener {
             sendAutoConfigCommand()
+        }
+
+        tvClearHistory.setOnClickListener {
+            dbHelper.clearHistory()
+            updateHistoryUI()
+            Toast.makeText(this, "Đã xoá lịch sử hoạt động", Toast.LENGTH_SHORT).show()
         }
     }
 

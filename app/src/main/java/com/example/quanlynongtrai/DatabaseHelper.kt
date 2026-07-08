@@ -57,6 +57,12 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, "UserDB", nul
         return list
     }
 
+    fun clearHistory() {
+        val db = this.writableDatabase
+        db.execSQL("DELETE FROM history")
+        db.close()
+    }
+
     data class ActivityLog(val type: String, val desc: String, val time: String)
 
     fun registerUser(email: String, pass: String): Long {
