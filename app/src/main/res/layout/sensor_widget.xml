@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_surface"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <!-- Tiêu đề gọn gàng ở đỉnh -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🌱 Nông Trại Smart"
+        android:textColor="@color/light_green"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Đường kẻ ngang bằng TextView (Hợp lệ 100% với RemoteViews) -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF"
+        android:layout_marginBottom="4dp"/>
+
+    <!-- Hàng 1: Nhiệt độ & Độ ẩm không khí -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Ô Nhiệt độ -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡️ Nhiệt độ"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp"
+                android:singleLine="true"/>
+            <TextView
+                android:id="@+id/widgetTvTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- °C"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <!-- Ô Độ ẩm KK -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💧 Khí"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp"
+                android:singleLine="true"/>
+            <TextView
+                android:id="@+id/widgetTvHum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- %"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:singleLine="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Hàng 2: Độ ẩm đất & Ánh sáng -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Ô Độ ẩm đất -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌱 Đất"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp"
+                android:singleLine="true"/>
+            <TextView
+                android:id="@+id/widgetTvSoil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- %"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:singleLine="true"/>
+        </LinearLayout>
+
+        <!-- Ô Ánh sáng -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="☀️ Sáng"
+                android:textColor="#BDBDBD"
+                android:textSize="11sp"
+                android:singleLine="true"/>
+            <TextView
+                android:id="@+id/widgetTvLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- Lux"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:singleLine="true"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

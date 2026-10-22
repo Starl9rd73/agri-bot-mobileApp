@@ -1,8 +1,9 @@
 package com.example.quanlynongtrai
 
 import android.app.Application
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 
@@ -12,11 +13,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val dbHelper = DatabaseHelper(application)
     private var currentDeviceId: String? = null
 
-    // LiveData để View (MainActivity) observe (lắng nghe)
+    // LiveData để View (Fragments) observe (lắng nghe)
     val connectionStatus = MutableLiveData<String>()
     val sensorData = MutableLiveData<SensorData>()
     val deviceStatus = MutableLiveData<DeviceStatus>()
-    val historyLogs = MutableLiveData<List<DatabaseHelper.ActivityLog>>() // Giả sử class log của bạn tên là LogItem
+    val historyLogs = MutableLiveData<List<DatabaseHelper.ActivityLog>>()
 
     init {
         setupMqttListeners()
@@ -35,6 +36,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     val data = gson.fromJson(payload, SensorData::class.java)
                     currentDeviceId = data.deviceId
                     sensorData.postValue(data)
+
+                    // Đẩy dữ liệu mới nhận được ra Widget ngoài màn hình chính
+                    updateHomeScreenWidget(data)
+
                 } else if (topic.endsWith("/status")) {
                     val status = gson.fromJson(payload, DeviceStatus::class.java)
                     currentDeviceId = status.deviceId
@@ -57,6 +62,21 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 e.printStackTrace()
             }
         }
+    }
+
+    // Hàm chuyên trách việc cập nhật Widget
+    private fun updateHomeScreenWidget(data: SensorData) {
+        val context = getApplication<Application>().applicationContext
+        // 1. Cập nhật Widget ngoài màn hình chính
+        SensorWidget.saveAndPushUpdate(
+            context,
+            data.temperature.toString(),
+            data.humidity.toString(),
+            data.soilMoisture.toString(),
+            data.lightLevel.toInt().toString()
+        )
+        // 2. Cập nhật Thanh thông báo liên tục (Ongoing Notification)
+        SensorNotificationHelper.showOrUpdateNotification(context, data)
     }
 
     fun sendPumpCommand(action: String) {
@@ -101,7 +121,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun refreshHistory() {
-        // Giả sử hàm getHistory trả về List. Nếu code cũ trả về String, bạn nên sửa dbHelper trả về List để UI tự map.
         historyLogs.postValue(dbHelper.getHistory())
     }
 

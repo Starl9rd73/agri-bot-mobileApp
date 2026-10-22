@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,12 +20,34 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <!-- <receiver -->
+        <!-- android:name=".SensorWidgetProvider" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.appwidget.action.APP_WIDGET_UPDATE" /> -->
+        <!-- </intent-filter> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.appwidget.provider" -->
+        <!-- android:resource="@xml/sensor_widget_info" /> -->
+        <!-- </receiver> -->
+        <receiver
+            android:name=".SensorWidget"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/sensor_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
